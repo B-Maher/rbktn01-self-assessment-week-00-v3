@@ -50,7 +50,22 @@
 
 
 
-var filterFamilyMembers = function (familyTree, truthTest) {
+var filterFamilyMembers = function (familyTree, truthTest, result) {
   // All your code in this function body
+  result = result || [];
+
+  //here we check if the current family pass the truth test we push the fullName in the array
+  if (truthTest(familyTree)) {
+  	result.push(familyTree["firstName"] + " " + familyTree["lastName"]);
+  }
+
+  //here we check if the current family has children we use recursion to execute 
+  //the function again for each children using forEach to loop over all the childrens
+  if (familyTree["children"].length !== 0) {
+  	familyTree["children"].forEach(function(child) {
+  		filterFamilyMembers(child, truthTest, result);
+  	});
+  }
+  return result;
 };
 
